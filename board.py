@@ -56,7 +56,7 @@ length=WIDTH/8
 
 
 
-def display_board(win,board=[],moves_shower=[]):
+def display_board(win,board=[],moves_shower=[],moves_counter=0,dice=[]):
     length=WIDTH/8
     win.fill((0,255,255))
 
@@ -74,6 +74,18 @@ def display_board(win,board=[],moves_shower=[]):
         for move in moves_shower:
             pos=(int((move[1]*length)+length/2),int((move[0]*length)+length/2))
             py.draw.circle(win,(0,0,255),pos,5)
+
+    if len(dice) > 0 :
+        for piece in avai_piece:
+            if piece.x == -1 :
+                continue
+            if (piece.color == moves_counter % 2) and (piece.type in dice):
+                pos = ((int(piece.y * length) + length / 2), int((piece.x * length) + length / 2))
+                py.draw.circle(win, (255, 255, 0), pos, 5)
+
+
+
+
     py.display.update()
 
 ###dice generator
@@ -112,7 +124,17 @@ no_to_colour={0:"white",1:"black"}
 
 while run:
     chess_board=createboard(avai_piece)
-    display_board(win,avai_piece,move_shower)
+    display_board(win,avai_piece,move_shower,move_counter,dice_choosen_pieces)
+    if avai_piece[2].x == -1 or avai_piece[3].x == -1 :
+        font = py.font.Font("freesansbold.ttf", 30)
+        text = font.render("GAME OVER", True, (255,0,0))
+        win.blit(text,(300,300))
+        py.display.update()
+        for event in py.event.get():
+            if event.type == py.QUIT:
+                run =False
+        continue
+
 
     for event in py.event.get():
         ###rolling of dice
