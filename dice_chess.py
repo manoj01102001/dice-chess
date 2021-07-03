@@ -87,7 +87,7 @@ class queen():
                 temp_y=self.y +yc
                 while (0<=temp_x<8) and (0<=temp_y<8):
                     if board[temp_x][temp_y] != None:
-                        print((temp_x,temp_y))
+
                         if board[temp_x][temp_y].color == self.color:
                             break
                         else:
@@ -318,6 +318,8 @@ class knight():
 
 
                 if 0 <= kn_x < 8 and 0 <= kn_y < 8:
+                    if board[kn_x][kn_y] != None and board[kn_x][kn_y].color == self.color:
+                        continue
                     moves.append((kn_x,kn_y))
         return moves
     def draw_piece(self,win):
