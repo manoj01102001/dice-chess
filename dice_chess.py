@@ -1,4 +1,4 @@
-
+import pygame as py
 
 board=[]
 for i in range(8):
@@ -7,7 +7,7 @@ for i in range(8):
         b.append(None)
     board.append(b)
 
-print(board)
+
 
 class queen():
     def __init__(self,x,y,color):
@@ -101,6 +101,20 @@ class queen():
 
         return moves
 
+
+    ##
+
+    def draw_piece(self,win):
+        if self.color == 1:
+            piece_color=(0,0,0)
+        else:
+            piece_color=(255,255,255)
+        font=py.font.Font("freesansbold.ttf",30)
+        text=font.render(self.type,True,piece_color)
+        return text
+
+    ##
+
 class rook():
     def __init__(self,x,y,color):
         self.type="R"
@@ -164,6 +178,15 @@ class rook():
             moves.append((self.x, temp_y))
             temp_y -= 1
         return moves
+    def draw_piece(self,win):
+        if self.color == 1:
+            piece_color=(0,0,0)
+        else:
+            piece_color=(255,255,255)
+        font=py.font.Font("freesansbold.ttf",30)
+        text=font.render(self.type,True,piece_color)
+        return text
+
 
 
 class bishop():
@@ -196,6 +219,15 @@ class bishop():
                     temp_y += yc
 
         return moves
+    def draw_piece(self,win):
+        if self.color == 1:
+            piece_color=(0,0,0)
+        else:
+            piece_color=(255,255,255)
+        font=py.font.Font("freesansbold.ttf",30)
+        text=font.render(self.type,True,piece_color)
+        return text
+
 
 
 class king():
@@ -217,6 +249,15 @@ class king():
                             continue
                     moves.append((self.x + dia_x ,self.y + dia_y))
         return moves
+    def draw_piece(self,win):
+        if self.color == 1:
+            piece_color=(0,0,0)
+        else:
+            piece_color=(255,255,255)
+        font=py.font.Font("freesansbold.ttf",30)
+        text=font.render(self.type,True,piece_color)
+        return text
+
 
 
 
@@ -247,6 +288,15 @@ class pawn():
                     if board[self.x - 1][self.y + dia_y].color != self.color:
                         moves.append((self.x-1,self.y + dia_y))
         return moves
+    def draw_piece(self,win):
+        if self.color == 1:
+            piece_color=(0,0,0)
+        else:
+            piece_color=(255,255,255)
+        font=py.font.Font("freesansbold.ttf",30)
+        text=font.render(self.type,True,piece_color)
+        return text
+
 
 
 
@@ -256,7 +306,7 @@ class knight():
         self.y = y
         self.color= color
         self.type ="N"
-    def possible_move(self,board):
+    def possible_moves(self,board):
         moves=[]
         kn=[-2,-1,1,2]
         for k in kn:
@@ -270,27 +320,21 @@ class knight():
                 if 0 <= kn_x < 8 and 0 <= kn_y < 8:
                     moves.append((kn_x,kn_y))
         return moves
+    def draw_piece(self,win):
+        if self.color == 1:
+            piece_color=(0,0,0)
+        else:
+            piece_color=(255,255,255)
+        font=py.font.Font("freesansbold.ttf",30)
+        text=font.render(self.type,True,piece_color)
+        return text
 
 
 
 
 
-queen_b=queen(0,4,1)
-queen_w=queen(7,4,0)
-king_b=king(0,5,1)
-king_w=king(7,5,0)
-rook_w=rook(7,0,0)
-rook_b=rook(0,7,1)
-bishop_w=bishop(7,3,0)
-bishop_b=bishop(0,3,1)
-
-bishop_b.x=1
-bishop_b.y=5
 
 
-pieces =[queen_w,queen_b,king_w,king_b,rook_w,rook_b,bishop_w,bishop_b]
-for p in pieces:
-    board[p.x][p.y] = p
 
 
 
