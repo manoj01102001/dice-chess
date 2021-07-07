@@ -15,6 +15,7 @@ class queen():
         self.x=x
         self.y=y
         self.color=color
+
     def possible_moves(self,board):
         temp_x=self.x+1
         temp_y=self.y+1
@@ -121,6 +122,7 @@ class rook():
         self.x=x
         self.y=y
         self.color=color
+        self.castling=True
 
 
     def possible_moves(self,board):
@@ -236,6 +238,38 @@ class king():
         self.y=y
         self.color=color
         self.type="K"
+        self.castling=True
+    def castle(self,board):
+        rook_castle=[]
+        king_moves = self.possible_moves_without_casting(board)
+
+        if self.castling == True :
+            for row in board:
+                for sq in row:
+                    if sq != None:
+                        if sq.color == self.color and sq.type == "R":
+                            if sq.castling:
+                                rook_moves = sq.possible_moves(board)
+
+                                for rook_move in rook_moves:
+                                    if rook_move in king_moves:
+                                        rook_castle.append(sq)
+
+        return rook_castle
+    def possible_moves_without_casting(self,board):
+        moves=[]
+
+        diagonal=[-1,0,1]
+        for dia_x in diagonal:
+            for dia_y in diagonal:
+                if (0<= self.x + dia_x < 8 ) and (0<= self.y + dia_y < 8):
+                    if board[self.x + dia_x][self.y + dia_y] != None:
+
+                        if (board[self.x + dia_x][self.y + dia_y].color == self.color):
+                            continue
+                    moves.append((self.x + dia_x ,self.y + dia_y))
+        return moves
+
     def possible_moves(self,board):
         moves=[]
 
@@ -248,6 +282,19 @@ class king():
                         if (board[self.x + dia_x][self.y + dia_y].color == self.color):
                             continue
                     moves.append((self.x + dia_x ,self.y + dia_y))
+        castling_possiblity=self.castle(board)
+        if len(castling_possiblity) > 0 :
+            for rook in castling_possiblity:
+                if rook.y == 0:
+                    moves.append((self.x,self.y-2))
+                else:
+                    moves.append((self.x,self.y+2))
+
+
+
+
+
+
         return moves
     def draw_piece(self,win):
         if self.color == 1:

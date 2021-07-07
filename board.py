@@ -22,11 +22,16 @@ nw2=dice_chess.knight(7,6,0)
 
 
 avai_piece=[qw,qb,kw,kb,rw1,rw2,rb1,rb2,bw1,bw2,bb1,bb2,nw1,nw2,nb1,nb2]
-for rows in range(8):
-    black_pawn = dice_chess.pawn(1,rows,1)
-    white_pawn = dice_chess.pawn(6,rows,0)
-    avai_piece.append(black_pawn)
-    avai_piece.append(white_pawn)
+
+
+
+def create_pawn_structure():
+    for rows in range(8):
+        black_pawn = dice_chess.pawn(1, rows, 1)
+        white_pawn = dice_chess.pawn(6, rows, 0)
+        avai_piece.append(black_pawn)
+        avai_piece.append(white_pawn)
+create_pawn_structure()
 
 
 def createboard(avai_piece):
@@ -45,7 +50,7 @@ def createboard(avai_piece):
 
 
 py.init()
-WIDTH=640
+WIDTH=480
 win=py.display.set_mode((WIDTH,WIDTH))
 py.display.set_caption("DICE CHESS")
 
@@ -68,7 +73,7 @@ def display_board(win,board=[],moves_shower=[],moves_counter=0,dice=[]):
         if piece.x == -1 :
             continue
         text=piece.draw_piece(win)
-        tuple=(piece.y * 80 + 40 , piece.x * 80 +40 )
+        tuple=(piece.y * length + length//2 , piece.x * length + length//2 )
         win.blit(text,tuple)
     if len(moves_shower) > 0:
         for move in moves_shower:
@@ -111,6 +116,30 @@ def skip_to_next_player(board,dcp,move_counter):
     return True
 
 
+def promotion():
+    promotion_sq=[0,7]
+
+    for piece in avai_piece:
+        if piece.type != "P" or piece.x == -1 or piece.x not in promotion_sq:
+            continue
+        else:
+            promotion_x=piece.x
+            promotion_y=piece.y
+            promoted_piece=random.choice(["Q","R","N","B"])
+            promoted_color=random.choice([0,1,piece.color])
+
+            if promoted_piece == "Q":
+                avai_piece.append(dice_chess.queen(promotion_x,promotion_y,promoted_color))
+            if promoted_piece == "R":
+                avai_piece.append(dice_chess.rook(promotion_x,promotion_y,promoted_color))
+            if promoted_piece == "B":
+                avai_piece.append(dice_chess.bishop(promotion_x,promotion_y,promoted_color))
+            if promoted_piece == "N":
+                avai_piece.append(dice_chess.knight(promotion_x,promotion_y,promoted_color))
+            piece.x=-1
+
+
+
 
 
 
@@ -125,6 +154,7 @@ no_to_colour={0:"white",1:"black"}
 while run:
     chess_board=createboard(avai_piece)
     display_board(win,avai_piece,move_shower,move_counter,dice_choosen_pieces)
+    promotion()
     if avai_piece[2].x == -1 or avai_piece[3].x == -1 :
         font = py.font.Font("freesansbold.ttf", 30)
         text = font.render("GAME OVER", True, (255,0,0))
@@ -166,10 +196,32 @@ while run:
             if square in move_shower:
                 if chess_board[square[0]][square[1]] != None:
                     chess_board[square[0]][square[1]].x=-1
+                if selected_piece.type == "R":
+                    selected_piece.castling=False
+
+
+
+                if selected_piece.type == "K":
+                    if square not in selected_piece.possible_moves_without_casting(chess_board):
+                        print("casting")
+                        castle_rooks=selected_piece.castle(chess_board)
+                        for castle_rook in castle_rooks:
+                            if square[1] == 6:
+                                if castle_rook.y == 7 :
+                                    castle_rook.y = 5
+                                    selected_piece.castling=False
+                            else:
+                                if castle_rook.y == 0 :
+                                    castle_rook.y = 3
+                                    selected_piece.castling = False
+
+
+                    selected_piece.castling=False
 
 
                 selected_piece.x=square[0]
                 selected_piece.y=square[1]
+
                 move_shower=[]
                 move_counter+=1
                 dice_choosen_pieces=[]
