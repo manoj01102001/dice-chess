@@ -73,7 +73,7 @@ def display_board(win,board=[],moves_shower=[],moves_counter=0,dice=[]):
         if piece.x == -1 :
             continue
         text=piece.draw_piece(win)
-        tuple=(piece.y * length + length//2 , piece.x * length + length//2 )
+        tuple=(piece.y * length , piece.x * length)
         win.blit(text,tuple)
     if len(moves_shower) > 0:
         for move in moves_shower:
@@ -170,6 +170,8 @@ while run:
         ###rolling of dice
         if event.type == py.KEYDOWN:
             if event.key == py.K_SPACE:
+                if len(dice_choosen_pieces) > 0:
+                    continue
                 dice_choosen_pieces=dice(3)
                 print(no_to_colour[move_counter%2],dice_choosen_pieces)
                 if skip_to_next_player(chess_board,dice_choosen_pieces,move_counter):
@@ -236,9 +238,4 @@ while run:
                 if chess_board[square[0]][square[1]].type  in dice_choosen_pieces:
                     selected_piece = chess_board[square[0]][square[1]]
                     move_shower = selected_piece.possible_moves(chess_board)
-
-
-
-
-
 
