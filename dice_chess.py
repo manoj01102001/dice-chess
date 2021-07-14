@@ -107,12 +107,10 @@ class queen():
 
     def draw_piece(self,win):
         if self.color == 1:
-            piece_color=(0,0,0)
+            piece_color= py.image.load(r"gameres/bqueen.png")
         else:
-            piece_color=(255,255,255)
-        font=py.font.Font("freesansbold.ttf",30)
-        text=font.render(self.type,True,piece_color)
-        return text
+            piece_color = py.image.load(r"gameres/wqueen.png")
+        return piece_color
 
     ##
 
@@ -182,12 +180,10 @@ class rook():
         return moves
     def draw_piece(self,win):
         if self.color == 1:
-            piece_color=(0,0,0)
+            piece_color= py.image.load(r"gameres/brook.png")
         else:
-            piece_color=(255,255,255)
-        font=py.font.Font("freesansbold.ttf",30)
-        text=font.render(self.type,True,piece_color)
-        return text
+            piece_color = py.image.load(r"gameres/wrook.png")
+        return piece_color
 
 
 
@@ -223,12 +219,10 @@ class bishop():
         return moves
     def draw_piece(self,win):
         if self.color == 1:
-            piece_color=(0,0,0)
+            piece_color= py.image.load(r"gameres/bBis.png")
         else:
-            piece_color=(255,255,255)
-        font=py.font.Font("freesansbold.ttf",30)
-        text=font.render(self.type,True,piece_color)
-        return text
+            piece_color = py.image.load(r"gameres/wBis.png")
+        return piece_color
 
 
 
@@ -298,12 +292,10 @@ class king():
         return moves
     def draw_piece(self,win):
         if self.color == 1:
-            piece_color=(0,0,0)
+            piece_color= py.image.load(r"gameres/bking.png")
         else:
-            piece_color=(255,255,255)
-        font=py.font.Font("freesansbold.ttf",30)
-        text=font.render(self.type,True,piece_color)
-        return text
+            piece_color = py.image.load(r"gameres/wking.png")
+        return piece_color
 
 
 
@@ -337,12 +329,10 @@ class pawn():
         return moves
     def draw_piece(self,win):
         if self.color == 1:
-            piece_color=(0,0,0)
+            piece_color= py.image.load(r"gameres/bpawn.png")
         else:
-            piece_color=(255,255,255)
-        font=py.font.Font("freesansbold.ttf",30)
-        text=font.render(self.type,True,piece_color)
-        return text
+            piece_color = py.image.load(r"gameres/wpawn.png")
+        return piece_color
 
 
 
@@ -371,21 +361,9 @@ class knight():
         return moves
     def draw_piece(self,win):
         if self.color == 1:
-            piece_color=(0,0,0)
+            piece_color= py.image.load(r"gameres/bknight.png")
         else:
-            piece_color=(255,255,255)
-        font=py.font.Font("freesansbold.ttf",30)
-        text=font.render(self.type,True,piece_color)
-        return text
-
-
-
-
-
-
-
-
-
-
+            piece_color = py.image.load(r"gameres/wknight.png")
+        return piece_color
 
 
